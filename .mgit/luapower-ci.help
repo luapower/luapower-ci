@@ -1,0 +1,6 @@
+ LUAPOWER CI COMMANDS:
+
+   ci status                  check status of all CI servers
+   ci update-db [PACKAGE]     update luapower_db.lua on all platforms
+   ci upload-db               upload luapower_db.lua on luapower.com
+
