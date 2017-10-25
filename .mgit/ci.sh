@@ -20,13 +20,16 @@ plat="$(mgit platform)"
 
 ci_ssh() {
 	(echo "cd luapower 2>/dev/null || cd /x/luapower 2>/dev/null || exit 1; "
-	cat) | ssh -o ConnectTimeout=2 "$server" 'bash --login -s'
+	cat) | ssh -o ConnectTimeout=4 "$server" 'bash --login -s'
 }
 
 status_one() { echo "$luajit luapower_cli.lua platform" | ci_ssh; }
 status() { each_server status_one; }
 
-update_db_one() { ./luapower update-db "$@" && echo "ok" || echo "failed"; }
+update_db_one() {
+	echo "$luajit luapower_cli.lua update-db $@ && \
+		echo '$@ ok' || echo '$@ failed'" | ci_ssh
+}
 update-db() { each_server update_db_one "$@"; }
 
 upload-db() {
