@@ -19,8 +19,12 @@ os="$(mgit platform -o)"
 plat="$(mgit platform)"
 
 ci_ssh() {
-	(echo "cd luapower 2>/dev/null || cd /x/luapower 2>/dev/null || exit 1; "
-	cat) | ssh -o ConnectTimeout=4 "$server" 'bash --login -s'
+	if [ "$server" == local ]; then
+		bash -s
+	else
+		(echo "cd luapower 2>/dev/null || cd /x/luapower 2>/dev/null || exit 1; "
+		cat) | ssh -o ConnectTimeout=4 "$server" 'bash --login -s'
+	fi
 }
 
 status_one() { echo "$luajit luapower_cli.lua platform" | ci_ssh; }
