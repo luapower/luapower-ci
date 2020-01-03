@@ -9,8 +9,8 @@ servers="$(cat "$conf")"
 each_server() {
 	echo "$servers" | while read server luajit; do
 		if [ "$server" ]; then
-			printf "%-14s  using %-14s  %s" "$server" "$luajit"
-			"$@"
+			printf "%-14s %-10s : " "$server" "$luajit"
+			$@
 		fi
 	done
 }
